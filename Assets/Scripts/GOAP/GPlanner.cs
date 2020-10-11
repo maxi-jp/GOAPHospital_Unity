@@ -45,8 +45,15 @@ public class GPlanner
         Node cheapest = null;
         foreach (Node leaf in leaves)
         {
-            if (cheapest == null || leaf.cost < cheapest.cost)
+            /*if (cheapest == null || leaf.cost < cheapest.cost)
+                cheapest = leaf;*/
+            if (cheapest == null)
                 cheapest = leaf;
+            else
+            {
+                if (leaf.cost < cheapest.cost)
+                    cheapest = leaf;
+            }
         }
 
         List<GAction> results = new List<GAction>();

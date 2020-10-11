@@ -46,11 +46,12 @@ public class GAgent : MonoBehaviour
     void LateUpdate()
     {
         // there is an action running, check if it has finished
-        if (currentAction != null && !currentAction.running)
+        if (currentAction != null && currentAction.running)
         {
             // check if the agent has reached its destination
             if (currentAction.agent.hasPath && currentAction.agent.remainingDistance < 1f)
             {
+                Debug.Log(gameObject.name + " has completed the action: " + currentAction.actionName);
                 // run the complition of the action
                 if (!invoked)
                 {
@@ -94,6 +95,9 @@ public class GAgent : MonoBehaviour
             {
                 // prepare the next action of the plan
                 currentAction = actionQueue.Dequeue();
+
+                Debug.Log(gameObject.name + " is preparing a new action: " + currentAction.actionName);
+
                 if (currentAction.PrePerform())
                 {
                     if (currentAction.target == null && currentAction.targetTag != "")
@@ -115,6 +119,8 @@ public class GAgent : MonoBehaviour
 
     private void CompleteAction()
     {
+        Debug.Log(gameObject.name + " completed action: " + currentAction.actionName);
+
         currentAction.running = false;
         currentAction.PostPerform();
         invoked = false;
