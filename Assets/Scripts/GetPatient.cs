@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoToWaitingRoom : GAction
+public class GetPatient : GAction
 {
     public override bool PrePerform()
     {
+        target = GWorld.Instance.RemovePatientFromTheWaitingRoom();
+        if (target == null)
+            return false;
+
         return true;
     }
+
     public override bool PostPerform()
     {
-        GWorld.Instance.GetWorld().ModifyState("Waiting", 1);
-        GWorld.Instance.AddPatientToTheWaitingRoom(gameObject);
-
         return true;
     }
 

@@ -6,10 +6,12 @@ public sealed class GWorld
 {
     private static readonly GWorld instance = new GWorld();
     private static WorldStates world;
+    private static Queue<GameObject> patientsWaitingInTheWaitingRoom;
 
     static GWorld()
     {
         world = new WorldStates();
+        patientsWaitingInTheWaitingRoom = new Queue<GameObject>();
     }
 
     public static GWorld Instance
@@ -21,4 +23,15 @@ public sealed class GWorld
     {
         return world;
     }
+
+    public void AddPatientToTheWaitingRoom(GameObject p)
+    {
+        patientsWaitingInTheWaitingRoom.Enqueue(p);
+    }
+
+    public GameObject RemovePatientFromTheWaitingRoom()
+    {
+        return patientsWaitingInTheWaitingRoom.Count > 0 ? patientsWaitingInTheWaitingRoom.Dequeue() : null;
+    }
+
 }
